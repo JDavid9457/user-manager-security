@@ -21,4 +21,7 @@ application:
   security:
     jwt:
       secret-key: oghZzqIP/WUpAw3xSjq8bPsKqlQ0/ValEwTJNVx8GCE=
+regex:
+  password: ^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$
+  email: ^[A-Za-z0-9+_.-]+@(.+)$
 

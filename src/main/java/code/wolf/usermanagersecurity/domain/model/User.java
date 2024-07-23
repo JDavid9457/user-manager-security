@@ -1,16 +1,13 @@
 package code.wolf.usermanagersecurity.domain.model;
+import code.wolf.usermanagersecurity.infrastructure.out.persistence.entity.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,8 +23,8 @@ public class User {
     private LocalDateTime modifiedAt;
     private LocalDateTime lastLogin;
     private String token;
-    private Boolean  isActive;
+    private Boolean isActive;
     @Enumerated(EnumType.STRING)
-    private RoleM roleMS;
+    private Role role;
 
 }

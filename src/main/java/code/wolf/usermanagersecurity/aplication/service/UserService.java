@@ -12,23 +12,20 @@ public class UserService implements UserPort {
     private final SaveUserPort saveUserPort;
     private final UpdateUSerPort updateUserPort;
     private final FindByIdUserPort findByIdUserPort;
+    private final ExistsUserByEmailPort existsUserByEmailPort;
     private final ListUserPort listUserPort;
-    private final FindByEmailPort findByEmailPort;
-    private final ExistsByEmailPort existsByEmailPort;
     private final DeleteUsertPort deleteUsertPort;
 
-
     public UserService(SaveUserPort saveUserPort, UpdateUSerPort updateUserPort, FindByIdUserPort findByIdUserPort,
-                       ListUserPort listUserPort, FindByEmailPort findByEmailPort,
-                       ExistsByEmailPort existsByEmailPort, DeleteUsertPort deleteUsertPort) {
+                       ExistsUserByEmailPort existsUserByEmailPort, ListUserPort listUserPort, DeleteUsertPort deleteUsertPort) {
         this.saveUserPort = saveUserPort;
         this.updateUserPort = updateUserPort;
         this.findByIdUserPort = findByIdUserPort;
+        this.existsUserByEmailPort = existsUserByEmailPort;
         this.listUserPort = listUserPort;
-        this.findByEmailPort = findByEmailPort;
-        this.existsByEmailPort = existsByEmailPort;
         this.deleteUsertPort = deleteUsertPort;
     }
+
 
     @Override
     public User save(User user) {
@@ -51,13 +48,8 @@ public class UserService implements UserPort {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return findByEmailPort.findByEmailUser(email);
-    }
-
-    @Override
     public boolean existsByEmail(String email) {
-        return existsByEmailPort.existsByEmailUser(email);
+        return existsUserByEmailPort.existsUserByEmail(email);
     }
 
     @Override

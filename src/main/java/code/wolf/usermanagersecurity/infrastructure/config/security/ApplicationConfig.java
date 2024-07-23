@@ -1,6 +1,6 @@
 package code.wolf.usermanagersecurity.infrastructure.config.security;
 
-import code.wolf.usermanagersecurity.infrastructure.persistence.repositories.UserRepository;
+import code.wolf.usermanagersecurity.infrastructure.out.persistence.repositories.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

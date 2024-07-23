@@ -3,6 +3,7 @@ package code.wolf.usermanagersecurity.aplication.port.in;
 import code.wolf.usermanagersecurity.domain.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserPort {
     User save(User user);
@@ -12,8 +13,6 @@ public interface UserPort {
     List<User> findAll();
 
     User findById(String id);
-
-    User findByEmail(String email);
 
     boolean existsByEmail(String email);
 
