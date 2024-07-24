@@ -13,10 +13,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -43,16 +42,16 @@ class LoginPersistenceAdapterTest {
     public void testLoginSuccess() {
 
         User inputUser = User.builder()
-                .email("test@example.com")
-                .password("password")
+                .email("ricardo@riguez.org")
+                .password("hunter2A*")
                 .build();
 
         UserEntity userEntity = new UserEntity();
-        userEntity.setEmail("test@example.com");
-        userEntity.setPassword("password");
+        userEntity.setEmail("ricardo@riguez.org");
+        userEntity.setPassword("hunter2A*");
 
 
-        String expectedToken = "generatedToken";
+        String expectedToken = "eyJhbGciOiJIUzI1NiJ9";
         User expectedUser = User.builder().token(expectedToken).build();
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(null);
@@ -60,7 +59,6 @@ class LoginPersistenceAdapterTest {
         when(jwtService.getToken(any(UserDetails.class))).thenReturn(expectedToken);
 
         User resultUser = loginPersistenceAdapter.login(inputUser);
-
 
         assertEquals(expectedUser.getToken(), resultUser.getToken());
     }

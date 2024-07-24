@@ -19,9 +19,9 @@ public class UserEntityModelMapperTest {
     void testToUserEntityToUser() {
         UserEntity userEntity = UserEntity.builder()
                 .id(UUID.randomUUID().toString())
-                .username("Test User")
-                .email("test@example.com")
-                .password("password123")
+                .username("ricardo Rodriguez")
+                .email("ricardo@riguez.org")
+                .password("hunter2A*")
                 .phones(List.of(PhoneEntity.builder()
                         .number("123456789")
                         .cityCode("01")
@@ -30,7 +30,7 @@ public class UserEntityModelMapperTest {
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
                 .lastLogin(LocalDateTime.now())
-                .token("testToken")
+                .token("eyJhbGciOiJIUzI1NiJ9")
                 .isActive(true)
                 .build();
 
@@ -51,15 +51,15 @@ public class UserEntityModelMapperTest {
     @Test
     void testUserToUserEntityForSave() {
         User user = User.builder()
-                .name("Test User")
-                .email("test@example.com")
-                .password("password123")
+                .name("ricardo Rodriguez")
+                .email("ricardo@riguez.org")
+                .password("hunter2A*")
                 .phones(List.of(Phone.builder()
                         .number("123456789")
                         .cityCode("01")
                         .contryCode("502")
                         .build()))
-                .token("testToken")
+                .token("eyJhbGciOiJIUzI1NiJ9")
                 .build();
 
         UserEntity userEntity = UserEntityModelMapper.UserToUserEntityForSave(user);
@@ -114,8 +114,8 @@ public class UserEntityModelMapperTest {
     @Test
     void testUserToDetailListDTO() {
         User user = User.builder()
-                .name("Test User")
-                .email("test@example.com")
+                .name("ricardo Rodriguez")
+                .email("ricardo@riguez.org")
                 .phones(List.of(Phone.builder()
                         .number("123456789")
                         .cityCode("01")
@@ -148,7 +148,7 @@ public class UserEntityModelMapperTest {
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
                 .lastLogin(LocalDateTime.now())
-                .token("testToken")
+                .token("eyJhbGciOiJIUzI1NiJ9")
                 .isActive(true)
                 .build();
 
@@ -166,8 +166,8 @@ public class UserEntityModelMapperTest {
     @Test
     void testUserToDetailDTO() {
         User user = User.builder()
-                .name("Test User")
-                .email("test@example.com")
+                .name("ricardo Rodriguez")
+                .email("ricardo@riguez.org")
                 .phones(List.of(Phone.builder()
                         .number("123456789")
                         .cityCode("01")

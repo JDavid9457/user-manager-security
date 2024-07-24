@@ -50,7 +50,6 @@ class UserPersistenceAdapterTest {
     private UserPersistenceAdapter userPersistenceAdapter;
 
     private User testUser;
-    private Phone testPhone;
     private UserEntity testUserEntity;
     private Phone testPhoneEntity;
 
@@ -68,9 +67,9 @@ class UserPersistenceAdapterTest {
         List<PhoneEntity> listPhone = new ArrayList<>();
 
         testUser = User.builder()
-                .name("Test User")
+                .name("ricardo Rodriguez")
                 .email("ricardo@riguez.org")
-                .password("password5*7")
+                .password("hunter2A*")
                 .phones(List.of(Phone
                         .builder()
                         .number("123456789")
@@ -80,19 +79,19 @@ class UserPersistenceAdapterTest {
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
                 .lastLogin(LocalDateTime.now())
-                .token("testToken")
+                .token("eyJhbGciOiJIUzI1NiJ9")
                 .isActive(true)
                 .role(Role.USER)
                 .build();
 
         testUserEntity = new UserEntity();
         testUserEntity.setEmail("ricardo@riguez.org");
-        testUserEntity.setPassword("password123*78");
+        testUserEntity.setPassword("hunter2A*");
         testUserEntity.setPhones(listPhone);
         testUserEntity.setCreatedAt(LocalDateTime.now());
         testUserEntity.setModifiedAt(LocalDateTime.now());
         testUserEntity.setLastLogin(LocalDateTime.now());
-        testUserEntity.setToken("testToken");
+        testUserEntity.setToken("eyJhbGciOiJIUzI1NiJ9");
         testUserEntity.setActive(true);
         testUserEntity.setRole(Role.USER);
 
@@ -104,15 +103,15 @@ class UserPersistenceAdapterTest {
         when(userRepository.findByEmail(testUser.getEmail())).thenReturn(Optional.empty());
         when(emailValidator.isValidEmail(testUser.getEmail())).thenReturn(true);
         when(passwordValidator.isValidPassword(testUser.getPassword())).thenReturn(true);
-        when(passwordEncoder.encode(testUser.getPassword())).thenReturn("password123*78");
+        when(passwordEncoder.encode(testUser.getPassword())).thenReturn("hunter2A*");
         when(userRepository.save(any(UserEntity.class))).thenReturn(testUserEntity);
-        when(jwtService.getToken(any(UserEntity.class))).thenReturn("testToken");
+        when(jwtService.getToken(any(UserEntity.class))).thenReturn("eyJhbGciOiJIUzI1NiJ9");
 
         User savedUser = userPersistenceAdapter.saveUser(testUser);
 
-        assertEquals("testToken", savedUser.getToken());
+        assertEquals("eyJhbGciOiJIUzI1NiJ9", savedUser.getToken());
         assertEquals("ricardo@riguez.org", savedUser.getEmail());
-        assertEquals("password123*78", savedUser.getPassword());
+        assertEquals("hunter2A*", savedUser.getPassword());
     }
 
     @Test
@@ -208,7 +207,7 @@ class UserPersistenceAdapterTest {
 
     @Test
     public void testExistsUserByEmailSuccess() {
-        String email = "test@example.com";
+        String email = "ricardo@riguez.org";
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(email);
 
@@ -222,7 +221,7 @@ class UserPersistenceAdapterTest {
 
     @Test
     public void testExistsUserByEmailNotFound() {
-        String email = "non-existent@example.com";
+        String email = "ricardo@riguez.org";
 
         when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
 

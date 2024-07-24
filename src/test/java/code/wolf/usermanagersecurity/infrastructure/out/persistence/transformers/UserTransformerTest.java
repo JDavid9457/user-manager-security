@@ -19,9 +19,9 @@ class UserTransformerTest {
     void testToEntityToUser() {
         UserEntity userEntity = UserEntity.builder()
                 .id(UUID.randomUUID().toString())
-                .username("Test User")
-                .email("test@example.com")
-                .password("password123")
+                .username("ricardo Rodriguez")
+                .email("ricardo@riguez.org")
+                .password("hunter2A*")
                 .phones(List.of(PhoneEntity.builder()
                         .number("123456789")
                         .cityCode("01")
@@ -71,9 +71,9 @@ class UserTransformerTest {
     @Test
     void testToToUser() {
         UserRequestDTO userDTO = UserRequestDTO.builder()
-                .username("Test User")
-                .email("test@example.com")
-                .password("password123")
+                .username("ricardo Rodriguez")
+                .email("ricardo@riguez.org")
+                .password("hunter2A*")
                 .phones(List.of(PhoneDTO.builder()
                         .number("123456789")
                         .cityCode("01")
