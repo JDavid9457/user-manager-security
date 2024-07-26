@@ -14,6 +14,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class PhoneEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String number;
 
     @Column(name ="city_code", nullable = false, length = 100)

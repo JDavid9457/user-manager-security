@@ -6,13 +6,13 @@ import code.wolf.usermanagersecurity.infrastructure.dto.request.UserDetailReques
 import code.wolf.usermanagersecurity.infrastructure.dto.request.UserRequestDTO;
 import code.wolf.usermanagersecurity.infrastructure.dto.response.ResponseDTO;
 import code.wolf.usermanagersecurity.infrastructure.dto.response.UserResponseDTO;
-import code.wolf.usermanagersecurity.infrastructure.util.auxiliary.ResponseEntityBuilder;
 import code.wolf.usermanagersecurity.infrastructure.out.persistence.transformers.UserEntityModelMapper;
+import code.wolf.usermanagersecurity.infrastructure.out.persistence.transformers.UserTransformer;
+import code.wolf.usermanagersecurity.infrastructure.util.auxiliary.ResponseEntityBuilder;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import code.wolf.usermanagersecurity.infrastructure.out.persistence.transformers.UserTransformer;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class UserController {
     @SneakyThrows
     public ResponseEntity<ResponseDTO<UserResponseDTO>> register(@RequestBody UserRequestDTO userRequestDTO) {
         var userResponseDTO = userPort.save(UserTransformer.toToUser(userRequestDTO));
-        return ResponseEntityBuilder.buildSaveResponse(UserEntityModelMapper.mapUserToDTO(userResponseDTO));
+        return ResponseEntityBuilder.buildSaveResponse(UserEntityModelMapper.toUserToDTO(userResponseDTO));
     }
 
     @PutMapping("update/{id}")
@@ -41,7 +41,7 @@ public class UserController {
     public ResponseEntity<ResponseDTO<UserResponseDTO>> updateRegister(
             @RequestBody UserRequestDTO userRequestDTO, @PathVariable String id) {
         var userResponseDTO = userPort.update(UserTransformer.toToUser(userRequestDTO), id);
-        return ResponseEntityBuilder.buildSaveResponse(UserEntityModelMapper.mapUserToDTO(userResponseDTO));
+        return ResponseEntityBuilder.buildSaveResponse(UserEntityModelMapper.toUserToDTO(userResponseDTO));
     }
 
     @GetMapping("/list")

@@ -28,6 +28,7 @@ public class UserTransformer {
 
     static List<Phone> toEntityToPhones(List<PhoneEntity> phoneEntityList){
         return phoneEntityList.stream().map(phone -> Phone.builder()
+                .id(phone.getId())
                 .number(phone.getNumber())
                 .cityCode(phone.getCityCode())
                 .contryCode(phone.getContryCode())
@@ -44,13 +45,15 @@ public class UserTransformer {
                 .build();
     }
 
-    static List<Phone> phoneToPhonesDTO(List<PhoneDTO> phonesDTO){
-        return phonesDTO.stream().map(phoneDTO -> Phone.builder()
-                .number(phoneDTO.getNumber())
-                .cityCode(phoneDTO.getCityCode())
-                .contryCode(phoneDTO.getContryCode())
-                .build()
-        ).collect(Collectors.toList());
+   public static List<Phone> phoneToPhonesDTO(List<PhoneDTO> phonesDTO){
+       return phonesDTO.stream().map(phoneDTO -> Phone.builder()
+               .id(phoneDTO.getId())
+               .number(phoneDTO.getNumber())
+               .cityCode(phoneDTO.getCityCode())
+               .contryCode(phoneDTO.getContryCode())
+               .build()
+       ).collect(Collectors.toList());
+
     }
 
 }

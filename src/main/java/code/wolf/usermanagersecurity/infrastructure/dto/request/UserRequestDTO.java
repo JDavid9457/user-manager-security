@@ -1,10 +1,7 @@
 package code.wolf.usermanagersecurity.infrastructure.dto.request;
 
 import code.wolf.usermanagersecurity.infrastructure.dto.PhoneDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,6 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
+@ToString
 public class UserRequestDTO {
     private String username;
     private String email;

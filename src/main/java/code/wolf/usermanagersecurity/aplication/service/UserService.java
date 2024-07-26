@@ -4,6 +4,7 @@ import code.wolf.usermanagersecurity.aplication.port.in.UserPort;
 import code.wolf.usermanagersecurity.aplication.port.out.*;
 import code.wolf.usermanagersecurity.common.UseCase;
 import code.wolf.usermanagersecurity.domain.model.User;
+import code.wolf.usermanagersecurity.infrastructure.out.persistence.entity.UserEntity;
 
 import java.util.List;
 

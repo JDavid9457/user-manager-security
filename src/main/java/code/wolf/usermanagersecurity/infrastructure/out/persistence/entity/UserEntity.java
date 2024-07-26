@@ -31,7 +31,7 @@ public class UserEntity implements UserDetails {
 
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PhoneEntity> phones;
 
     @Column(nullable = false)

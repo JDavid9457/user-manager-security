@@ -3,10 +3,7 @@ package code.wolf.usermanagersecurity.infrastructure.out.persistence;
 import code.wolf.usermanagersecurity.domain.model.Phone;
 import code.wolf.usermanagersecurity.domain.model.User;
 import code.wolf.usermanagersecurity.infrastructure.config.security.jwt.JwtService;
-import code.wolf.usermanagersecurity.infrastructure.exceptions.EmailDuplicatedException;
-import code.wolf.usermanagersecurity.infrastructure.exceptions.EmailNotFoudException;
-import code.wolf.usermanagersecurity.infrastructure.exceptions.EmailNotValidException;
-import code.wolf.usermanagersecurity.infrastructure.exceptions.UserNotFoundException;
+import code.wolf.usermanagersecurity.infrastructure.exceptions.*;
 import code.wolf.usermanagersecurity.infrastructure.out.persistence.entity.PhoneEntity;
 import code.wolf.usermanagersecurity.infrastructure.out.persistence.entity.Role;
 import code.wolf.usermanagersecurity.infrastructure.out.persistence.entity.UserEntity;
@@ -59,6 +56,7 @@ class UserPersistenceAdapterTest {
         MockitoAnnotations.openMocks(this);
 
         testPhoneEntity = Phone.builder()
+                .id(1L)
                 .number("31549921")
                 .cityCode("57")
                 .contryCode("18")
@@ -67,15 +65,17 @@ class UserPersistenceAdapterTest {
         List<PhoneEntity> listPhone = new ArrayList<>();
 
         testUser = User.builder()
+                .id("3930cdb6-862a-4d4f-8eaa-5bbac5f615d7")
                 .name("ricardo Rodriguez")
                 .email("ricardo@riguez.org")
                 .password("hunter2A*")
                 .phones(List.of(Phone
                         .builder()
+                        .id(1L)
                         .number("123456789")
                         .cityCode("01")
                         .contryCode("502")
-                .build()))
+                        .build()))
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
                 .lastLogin(LocalDateTime.now())
@@ -148,6 +148,19 @@ class UserPersistenceAdapterTest {
             userPersistenceAdapter.saveUser(testUser);
         });
         verify(userRepository, never()).save(any(UserEntity.class));
+    }
+
+    @Test
+    public void testUpdateUserThrowsException() {
+        String userId = "1a950b23-d098-4ea0-83f3-2563ad4bfab8";
+        UserEntity existingUserEntity = new UserEntity();
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(existingUserEntity));
+        doThrow(new RuntimeException("Simulated exception")).when(userRepository).save(existingUserEntity);
+
+        assertThrows(UserUpdateException.class, () -> {
+            userPersistenceAdapter.updateUser(testUser, userId);
+        });
     }
 
     @Test

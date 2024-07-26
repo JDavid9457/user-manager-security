@@ -31,14 +31,12 @@ public class UserEntityModelMapper {
                 .build();
     }
 
-    public static UserEntity UserToUserEntityForSave(User user) {
-        List<PhoneEntity> listPhones = userPhonesToPhoneEntities(user);
-        return UserEntity.builder()
+    public static UserEntity userToUserEntityForSave(User user) {
+        UserEntity userEntity = UserEntity.builder()
                 .id(UUID.randomUUID().toString())
                 .username(user.getName())
                 .email(user.getEmail())
                 .password(user.getPassword())
-                .phones(listPhones)
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
                 .lastLogin(LocalDateTime.now())
@@ -46,12 +44,45 @@ public class UserEntityModelMapper {
                 .isActive(true)
                 .role(Role.USER)
                 .build();
+
+       userEntity.setPhones(extracted(user.getPhones(),userEntity));
+        return userEntity;
+    }
+
+    public static UserEntity userToUserEntityForUpdate(User user, UserEntity userExists) {
+        UserEntity userEntity = UserEntity.builder()
+                .id(userExists.getId())
+                .username(user.getName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .createdAt(userExists.getCreatedAt())
+                .modifiedAt(LocalDateTime.now())
+                .lastLogin(LocalDateTime.now())
+                .token(userExists.getToken())
+                .isActive(true)
+                .role(Role.USER)
+                .build();
+
+        userEntity.setPhones(extracted(user.getPhones(),userEntity));
+        return userEntity;
+    }
+
+    private static List<PhoneEntity> extracted(List<Phone> phones, UserEntity user){
+        return phones.stream().map(phone -> PhoneEntity.builder()
+                .id(phone.getId())
+                .number(phone.getNumber())
+                .cityCode(phone.getCityCode())
+                .contryCode(phone.getContryCode())
+                .user(user)
+                .build()
+        ).toList();
     }
 
     public static List<PhoneEntity> userPhonesToPhoneEntities(User user) {
         return user.getPhones()
                 .stream()
                 .map(p -> PhoneEntity.builder()
+                        .id(p.getId())
                         .number(p.getNumber())
                         .cityCode(p.getCityCode())
                         .contryCode(p.getContryCode())
@@ -61,6 +92,7 @@ public class UserEntityModelMapper {
 
     static List<Phone> toPhoneEntitiesToPhones(List<PhoneEntity> phoneEntities){
         return phoneEntities.stream().map(phone -> Phone.builder()
+                .id(phone.getId())
                 .number(phone.getNumber())
                 .cityCode(phone.getCityCode())
                 .contryCode(phone.getContryCode())
@@ -74,9 +106,7 @@ public class UserEntityModelMapper {
                 .collect(Collectors.toList());
     }
 
-
-
-    public static UserResponseDTO mapUserToDTO(User user){
+    public static UserResponseDTO toUserToDTO(User user){
         return UserResponseDTO.builder()
                 .id(user.getId())
                 .createdAt(user.getCreatedAt())
@@ -90,26 +120,21 @@ public class UserEntityModelMapper {
 
     public static UserDetailRequestDTO userToDetailDTO(User user) {
         return UserDetailRequestDTO.builder()
+                .id(user.getId())
                 .username(user.getName())
                 .email(user.getEmail())
                 .phones(user.getPhones().stream()
-                        .map(phone -> new PhoneDTO(phone.getNumber(), phone.getCityCode(), phone.getContryCode()))
+                        .map(phone -> new PhoneDTO(
+                                phone.getId(),
+                                phone.getNumber(),
+                                phone.getCityCode(),
+                                phone.getContryCode()))
                         .collect(Collectors.toList()))
                 .createdAt(user.getCreatedAt())
                 .modifiedAt(user.getModifiedAt())
                 .lastLogin(user.getLastLogin())
                 .isActive(user.getIsActive())
                 .build();
-    }
-
-    public static List<PhoneEntity> toUserEntity(User user) {
-        return user.getPhones()
-                .stream().map(p -> PhoneEntity.builder()
-                        .number(p.getNumber())
-                        .cityCode(p.getCityCode())
-                        .contryCode(p.getContryCode())
-                        .build())
-                .collect(Collectors.toList());
     }
 
 }

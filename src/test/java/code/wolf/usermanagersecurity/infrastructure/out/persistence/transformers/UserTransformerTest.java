@@ -23,6 +23,7 @@ class UserTransformerTest {
                 .email("ricardo@riguez.org")
                 .password("hunter2A*")
                 .phones(List.of(PhoneEntity.builder()
+                        .id(1L)
                         .number("123456789")
                         .cityCode("01")
                         .contryCode("502")
@@ -54,6 +55,7 @@ class UserTransformerTest {
     @Test
     void testToEntityToPhones() {
         List<PhoneEntity> phoneEntities = List.of(PhoneEntity.builder()
+                .id(1L)
                 .number("123456789")
                 .cityCode("01")
                 .contryCode("502")
@@ -75,6 +77,7 @@ class UserTransformerTest {
                 .email("ricardo@riguez.org")
                 .password("hunter2A*")
                 .phones(List.of(PhoneDTO.builder()
+                        .id(1L)
                         .number("123456789")
                         .cityCode("01")
                         .contryCode("502")
@@ -95,6 +98,7 @@ class UserTransformerTest {
     @Test
     void testPhoneToPhonesDTO() {
         List<PhoneDTO> phoneDTOs = List.of(PhoneDTO.builder()
+                .id(1L)
                 .number("123456789")
                 .cityCode("01")
                 .contryCode("502")

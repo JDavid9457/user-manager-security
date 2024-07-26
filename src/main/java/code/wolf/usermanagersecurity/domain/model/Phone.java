@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class Phone {
+    private Long id;
     private String number;
     private String cityCode;
     private String contryCode;

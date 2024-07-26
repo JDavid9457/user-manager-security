@@ -8,7 +8,9 @@ import code.wolf.usermanagersecurity.infrastructure.out.persistence.entity.Phone
 import code.wolf.usermanagersecurity.infrastructure.out.persistence.entity.Role;
 import code.wolf.usermanagersecurity.infrastructure.out.persistence.entity.UserEntity;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +25,7 @@ public class UserEntityModelMapperTest {
                 .email("ricardo@riguez.org")
                 .password("hunter2A*")
                 .phones(List.of(PhoneEntity.builder()
+                        .id(1L)
                         .number("123456789")
                         .cityCode("01")
                         .contryCode("502")
@@ -55,6 +58,7 @@ public class UserEntityModelMapperTest {
                 .email("ricardo@riguez.org")
                 .password("hunter2A*")
                 .phones(List.of(Phone.builder()
+                        .id(1L)
                         .number("123456789")
                         .cityCode("01")
                         .contryCode("502")
@@ -62,7 +66,7 @@ public class UserEntityModelMapperTest {
                 .token("eyJhbGciOiJIUzI1NiJ9")
                 .build();
 
-        UserEntity userEntity = UserEntityModelMapper.UserToUserEntityForSave(user);
+        UserEntity userEntity = UserEntityModelMapper.userToUserEntityForSave(user);
 
         assertNotNull(userEntity);
         assertEquals(user.getName(), userEntity.getUsername());
@@ -83,6 +87,7 @@ public class UserEntityModelMapperTest {
     void testUserPhonesToPhoneEntities() {
         User user = User.builder()
                 .phones(List.of(Phone.builder()
+                        .id(1L)
                         .number("123456789")
                         .cityCode("01")
                         .contryCode("502")
@@ -99,6 +104,7 @@ public class UserEntityModelMapperTest {
     @Test
     void testToPhoneEntitiesToPhones() {
         List<PhoneEntity> phoneEntities = List.of(PhoneEntity.builder()
+                .id(1L)
                 .number("123456789")
                 .cityCode("01")
                 .contryCode("502")
@@ -117,6 +123,7 @@ public class UserEntityModelMapperTest {
                 .name("ricardo Rodriguez")
                 .email("ricardo@riguez.org")
                 .phones(List.of(Phone.builder()
+                        .id(1L)
                         .number("123456789")
                         .cityCode("01")
                         .contryCode("502")
@@ -142,7 +149,7 @@ public class UserEntityModelMapperTest {
     }
 
     @Test
-    void testMapUserToDTO() {
+    void testToUserToDTO() {
         User user = User.builder()
                 .id(UUID.randomUUID().toString())
                 .createdAt(LocalDateTime.now())
@@ -152,7 +159,7 @@ public class UserEntityModelMapperTest {
                 .isActive(true)
                 .build();
 
-        UserResponseDTO userResponseDTO = UserEntityModelMapper.mapUserToDTO(user);
+        UserResponseDTO userResponseDTO = UserEntityModelMapper.toUserToDTO(user);
 
         assertNotNull(userResponseDTO);
         assertEquals(user.getId(), userResponseDTO.getId());
@@ -169,6 +176,7 @@ public class UserEntityModelMapperTest {
                 .name("ricardo Rodriguez")
                 .email("ricardo@riguez.org")
                 .phones(List.of(Phone.builder()
+                        .id(1L)
                         .number("123456789")
                         .cityCode("01")
                         .contryCode("502")

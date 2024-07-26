@@ -14,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.PUT;
 
 @Configuration
 @EnableWebSecurity
@@ -48,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/register/**").permitAll()
                         .requestMatchers(DELETE, "/register/delete/**").permitAll()
+                        .requestMatchers(PUT, "/register/update/**").permitAll()
                         .anyRequest().authenticated())
                 .headers(h -> h.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
