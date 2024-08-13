@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 @PersistenceAdapter
-@AllArgsConstructor
 public class UserPersistenceAdapter implements SaveUserPort, UpdateUSerPort,
         ListUserPort, FindByIdUserPort, DeleteUsertPort, ExistsUserByEmailPort {
 
@@ -31,6 +30,14 @@ public class UserPersistenceAdapter implements SaveUserPort, UpdateUSerPort,
     private final EmailValidation emailValidator;
     private final PasswordValidation passwordValidator;
 
+    public UserPersistenceAdapter(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, EmailValidation emailValidator, PasswordValidation passwordValidator) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.emailValidator = emailValidator;
+        this.passwordValidator = passwordValidator;
+    }
+
 
     @Override
     public User saveUser(User user) {
@@ -39,7 +46,6 @@ public class UserPersistenceAdapter implements SaveUserPort, UpdateUSerPort,
             String encodedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(encodedPassword);
             UserEntity newUser = userRepository.save(UserEntityModelMapper.userToUserEntityForSave(user));
-            userRepository.save(newUser);
             newUser = addTokeUser(newUser);
             return UserEntityModelMapper.toUserEntityToUser(newUser);
         } catch (EmailDuplicatedException |EmailNotValidException e) {
