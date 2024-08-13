@@ -19,6 +19,7 @@ import static org.springframework.http.HttpMethod.PUT;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
 

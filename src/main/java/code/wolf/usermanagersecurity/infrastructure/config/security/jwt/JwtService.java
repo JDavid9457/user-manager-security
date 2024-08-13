@@ -20,24 +20,24 @@ public class JwtService {
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
 
-  public String getToken(UserDetails userDetails){
-      return getToken(new HashMap<>(),userDetails);
-  }
+    public String getToken(UserDetails userDetails) {
+        return getToken(new HashMap<>(), userDetails);
+    }
 
-    private String getToken(Map<String,Object> extraClaim,UserDetails userDetails ){
+    private String getToken(Map<String, Object> extraClaim, UserDetails userDetails) {
         return Jwts
                 .builder()
                 .claims(extraClaim)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+1000*60*24))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getKey())
                 .compact();
 
     }
 
     private SecretKey getKey() {
-        byte[] keyBytes=Decoders.BASE64.decode(secretKey);
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -46,8 +46,8 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username=getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername())&& !isTokenExpired(token));
+        final String username = getUsernameFromToken(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     private Claims getAllClaims(String token) {
@@ -59,8 +59,8 @@ public class JwtService {
                 .getPayload();
     }
 
-    public <T> T getClaim(String token, Function<Claims,T> claimsResolver) {
-        final Claims claims=getAllClaims(token);
+    public <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = getAllClaims(token);
         return claimsResolver.apply(claims);
     }
 

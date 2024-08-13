@@ -5,7 +5,6 @@
     import code.wolf.usermanagersecurity.common.WebAdapter;
     import code.wolf.usermanagersecurity.domain.model.User;
     import code.wolf.usermanagersecurity.infrastructure.dto.request.AuthResponseDTO;
-    import io.swagger.v3.oas.annotations.Operation;
     import lombok.SneakyThrows;
     import org.springframework.http.ResponseEntity;
     import org.springframework.validation.annotation.Validated;
@@ -26,7 +25,7 @@
             this.loginPort = loginPort;
         }
 
-        @Operation(summary = "Post", description = "login")
+
         @PostMapping(value = "/login")
         @SneakyThrows
         public ResponseEntity<AuthResponseDTO> login(@Validated @RequestBody User user) {

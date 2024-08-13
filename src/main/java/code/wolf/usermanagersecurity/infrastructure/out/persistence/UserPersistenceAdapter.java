@@ -11,14 +11,13 @@ import code.wolf.usermanagersecurity.infrastructure.out.persistence.transformers
 import code.wolf.usermanagersecurity.infrastructure.out.persistence.transformers.UserTransformer;
 import code.wolf.usermanagersecurity.infrastructure.util.validation.EmailValidation;
 import code.wolf.usermanagersecurity.infrastructure.util.validation.PasswordValidation;
-import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
+
+import static code.wolf.usermanagersecurity.infrastructure.util.constants.Messages.*;
 
 @PersistenceAdapter
 public class UserPersistenceAdapter implements SaveUserPort, UpdateUSerPort,
@@ -51,7 +50,7 @@ public class UserPersistenceAdapter implements SaveUserPort, UpdateUSerPort,
         } catch (EmailDuplicatedException |EmailNotValidException e) {
             throw e;
         }catch (Exception e) {
-            throw new UserSaveException("Error al guardar usuario");
+            throw new UserSaveException(USER_SAVE_ERROR);
         }
     }
 
@@ -65,13 +64,13 @@ public class UserPersistenceAdapter implements SaveUserPort, UpdateUSerPort,
     private void validations(User user) {
         Optional<UserEntity> findUser = userRepository.findByEmail(user.getEmail());
         if (findUser.isPresent()) {
-            throw new EmailDuplicatedException("Email ya existe en la base de datos");
+            throw new EmailDuplicatedException(EMAIL_ALREADY_EXISTS);
         }
         if (!emailValidator.isValidEmail(user.getEmail())) {
-            throw new EmailNotValidException("Email no cumple con el formato adecuado (aaaaaaa@dominio.cl)");
+            throw new EmailNotValidException(EMAIL_INVALID_FORMAT);
         }
         if (!passwordValidator.isValidPassword(user.getPassword())) {
-            throw new EmailNotValidException("Clave no cumple con el formato valido.");
+            throw new EmailNotValidException(PASSWORD_INVALID_FORMAT);
         }
     }
 
@@ -79,20 +78,20 @@ public class UserPersistenceAdapter implements SaveUserPort, UpdateUSerPort,
     public User updateUser(User user, String id) {
         try {
             UserEntity userExists = userRepository.findById(id)
-                    .orElseThrow(() -> new UserNotFoundException("not found user" + id));
+                    .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + id));
             UserEntity updateUser = userRepository.save(UserEntityModelMapper.userToUserEntityForUpdate(user, userExists));
             return UserEntityModelMapper.toUserEntityToUser(updateUser);
         } catch (UserNotFoundException e) {
             throw e;
         } catch (Exception e) {
-            throw new UserUpdateException("Error al actualizar con el " + id);
+            throw new UserUpdateException(UPDATE_ERROR_WITH_ID + id);
         }
     }
 
     @Override
     public boolean deleteUser(String id) {
         UserEntity user = userRepository
-                .findById(id).orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
+                .findById(id).orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
         userRepository.delete(user);
         return true;
     }
@@ -101,7 +100,7 @@ public class UserPersistenceAdapter implements SaveUserPort, UpdateUSerPort,
     @Override
     public User findByIdUser(String id) {
         UserEntity user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
         return UserEntityModelMapper.toUserEntityToUser(user);
     }
 
@@ -116,7 +115,7 @@ public class UserPersistenceAdapter implements SaveUserPort, UpdateUSerPort,
     public boolean existsUserByEmail(String email) {
         Optional<UserEntity> exist = userRepository.findByEmail(email);
         if (exist.isEmpty()) {
-            throw new EmailNotFoudException("Email ya existe en la base de datos");
+            throw new EmailNotFoudException(EMAIL_ALREADY_EXISTS);
         }
         return true;
     }

@@ -9,7 +9,6 @@ import code.wolf.usermanagersecurity.infrastructure.dto.response.UserResponseDTO
 import code.wolf.usermanagersecurity.infrastructure.out.persistence.transformers.UserEntityModelMapper;
 import code.wolf.usermanagersecurity.infrastructure.out.persistence.transformers.UserTransformer;
 import code.wolf.usermanagersecurity.infrastructure.util.auxiliary.ResponseEntityBuilder;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,6 @@ public class UserController {
         this.userPort = userPort;
     }
 
-    @Operation(summary = "Get all users", description = "Retrieve a list of all users")
     @PostMapping(value = "save")
     @SneakyThrows
     public ResponseEntity<ResponseDTO<UserResponseDTO>> register(@RequestBody UserRequestDTO userRequestDTO) {

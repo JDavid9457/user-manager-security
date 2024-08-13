@@ -6,12 +6,14 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+import static code.wolf.usermanagersecurity.infrastructure.util.constants.Messages.*;
+
 public class ResponseEntityBuilder {
     public static <T> ResponseEntity<ResponseDTO<T>> buildSaveResponse(T data) {
         return ResponseEntity.ok(
                 ResponseDTO.<T>builder()
-                        .message("Exitoso")
-                        .status(HttpStatus.OK.value())
+                        .message(USER_CREATION_SUCCESS)
+                        .status(HttpStatus.CREATED.value())
                         .data(data)
                         .build());
     }
@@ -19,18 +21,16 @@ public class ResponseEntityBuilder {
     public static <T> ResponseEntity<ResponseDTO<T>> buildFindByIdResponse(T data) {
         return ResponseEntity.ok(
                 ResponseDTO.<T>builder()
-                        .message("id")
+                        .message(ID_FOUND)
                         .status(HttpStatus.OK.value())
                         .data(data)
                         .build());
     }
 
-
-
     public static <T> ResponseEntity<ResponseDTO<List<T>>> buildListResponse(List<T> data) {
         return ResponseEntity.ok(
                 ResponseDTO.<List<T>>builder()
-                        .message("Found")
+                        .message(LIST_FOUND)
                         .status(HttpStatus.OK.value())
                         .data(data)
                         .build());
@@ -39,7 +39,7 @@ public class ResponseEntityBuilder {
     public static ResponseEntity<ResponseDTO<Boolean>> buildDeletedResponse(boolean isDeleted) {
         return ResponseEntity.ok(
                 ResponseDTO.<Boolean>builder()
-                        .message(isDeleted ? "User deleted successfully" : "User not found")
+                        .message(isDeleted ? USER_DELETED_SUCCESSFULLY : USER_NOT_FOUND)
                         .status(HttpStatus.OK.value())
                         .data(isDeleted)
                         .build());

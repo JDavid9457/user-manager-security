@@ -7,7 +7,7 @@
 ![Gradle](https://img.shields.io/badge/Gradle-8.2.1-success?logo=Gradle)
 
 ## Soluccion del problema
-De acuerdo con el problema,se abordó la construcción un servicio de backen, utilizando la tecnología Java y spring boot, para ello se implementó una arquitectura limpia adaptada a las necesidades del problema, obteniendo una aplicación para creación de usuario
+De acuerdo con el problema,se abordó la construcción un servicio de backen, utilizando la tecnología Java y spring boot, para ello se implementó una arquitectura hexagonal adaptada a las necesidades del problema, obteniendo una aplicación para creación de usuario
 
 
 
